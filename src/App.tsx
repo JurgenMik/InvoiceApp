@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import data from './data.json';
+import InvoiceDetails from './components/InvoiceDetails';
 import {RiMoonFill} from 'react-icons/ri';
 import {BsPlus, BsDot} from 'react-icons/bs';
 import {BiChevronRight} from 'react-icons/bi';
@@ -8,6 +9,8 @@ import {invoiceInterface} from './Interfaces/InvoiceInterface';
 function App() {
 
     const [invoices, setInvoices] = useState<invoiceInterface[]>([]);
+    const [invoiceInfo, setInfo] = useState<object>();
+    const [detailedView, setView] = useState<boolean>(false);
     const [status, setStatus] = useState<number>();
     const [filter, setFilter] = useState<string>();
 
@@ -42,6 +45,11 @@ function App() {
 
     let filtered = useMemo(handleFilters, [invoices, filter]);
 
+    const handleDetailedView = (details : any) => {
+        setInfo(details);
+        setView(true);
+    }
+
     return (
     <div className="w-full min-h-screen sm:grid sm:grid-cols-5">
         <div className="sm:w-1/3 w-full sm:h-full h-24 bg-slate-800 text-white sm:rounded-r-3xl sm:col-span-1 flex sm:flex-col flex-row">
@@ -65,6 +73,7 @@ function App() {
                 />
             </div>
         </div>
+        {detailedView ? <InvoiceDetails invoiceInfo={invoiceInfo} setView={setView} /> :
         <div className="col-span-4 sm:mt-24 mt-16">
             <div className="sm:w-3/4 w-full h-16 flex items-center sm:flex-row flex-col">
                 <div className="w-1/5 text-4xl font-bold">
@@ -82,7 +91,8 @@ function App() {
                         <option value="Paid">Paid</option>
                     </select>
                     <button className="sm:p-2 p-1 bg-violet-600 text-white rounded-full flex flex-row items-center">
-                       <BsPlus className="sm:w-8 w-10 sm:h-8 h-10 rounded-full bg-white text-violet-600 mr-4" /> New Invoice
+                        <BsPlus className="sm:w-8 w-10 sm:h-8 h-10 rounded-full bg-white text-violet-600 mr-4"/> New
+                        Invoice
                     </button>
                 </div>
             </div>
@@ -122,14 +132,15 @@ function App() {
                                         <BsDot className="text-5xl" />
                                         <p>{details.status}</p>
                                     </div>
-                                    <BiChevronRight className="sm:w-16 w-full ml-2 text-3xl text-indigo-500" />
+                                    <BiChevronRight onClick={e => handleDetailedView(details)} className="sm:w-16 w-full ml-2 text-3xl text-indigo-500" />
                                 </div>
                             </div>
                         )
                         })}
+                </div>
             </div>
+        }
         </div>
-    </div>
   );
 }
 
