@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import data from './data.json';
 import {RiMoonFill} from 'react-icons/ri';
 import {BsPlus, BsDot} from 'react-icons/bs';
@@ -8,10 +8,39 @@ import {invoiceInterface} from './Interfaces/InvoiceInterface';
 function App() {
 
     const [invoices, setInvoices] = useState<invoiceInterface[]>([]);
+    const [status, setStatus] = useState<number>();
+    const [filter, setFilter] = useState<string>();
 
     useEffect(() => {
         setInvoices(data);
+        setStatus(invoices.length);
     }, [invoices])
+
+    const handleSelect = (e : React.ChangeEvent<HTMLSelectElement>) => {
+        setFilter(e.target.value);
+    }
+
+    const handleFilters = () => {
+        if (filter === 'Paid') {
+            setStatus(invoices.filter((invoice : any) =>
+                invoice.status === 'Paid').length);
+            return invoices.filter((invoice : any) => invoice.status === 'Paid');
+        }
+        if (filter === 'Draft') {
+            setStatus(invoices.filter((invoice : any) =>
+                invoice.status === 'Draft').length);
+            return invoices.filter((invoice: any) => invoice.status === 'Draft');
+        }
+        if (filter === 'Pending') {
+            setStatus(invoices.filter((invoice : any) =>
+                invoice.status === 'Pending').length);
+            return invoices.filter((invoice: any) => invoice.status === 'Pending');
+        }
+        setStatus(invoices.length);
+        return invoices;
+    }
+
+    let filtered = useMemo(handleFilters, [invoices, filter]);
 
     return (
     <div className="w-full min-h-screen sm:grid sm:grid-cols-5">
@@ -45,6 +74,7 @@ function App() {
                     <select
                         name="status"
                         className="ml-auto font-bold"
+                        onChange={handleSelect}
                     >
                         <option value="">Filter by status</option>
                         <option value="Draft">Draft</option>
@@ -58,36 +88,36 @@ function App() {
             </div>
             <div className="text-gray-400 sm:mt-0 mt-12 sm:ml-0 ml-4">
                 <p>
-                    There are {invoices.length} total invoices
+                    There are {status} total invoices
                 </p>
             </div>
             <div className="sm:w-3/4 w-full mt-16 sm:flex justify-center items-center sm:flex-col sm:space-y-2 space-y-16">
                 {invoices.length === 0 ? <img className="w-72 h-64" src={'assets/illustration-empty.svg'} alt="illustration" /> :
-                    invoices.map((details : any, index : number) => {
+                    filtered.map((details : any, index : number) => {
                         return (
                             <div className="w-full sm:h-16 h-36" key={index}>
                                 <div className="w-full h-full sm:flex grid grid-cols-2 sm:flex-row items-center justify-center text-lg">
-                                    <div className="sm:w-1/4 w-full flex justify-center">
+                                    <div className="sm:w-1/5 w-full flex justify-center">
                                         <p><span className="text-indigo-500">#</span>
                                             {details.id}
                                         </p>
                                     </div>
-                                    <div className="sm:w-1/4 w-full flex justify-center">
+                                    <div className="sm:w-1/5 w-full flex justify-center">
                                         <p className="text-indigo-300">
                                             Due {details.paymentDue}
                                         </p>
                                     </div>
-                                    <div className="sm:w-1/4 w-full flex justify-center">
+                                    <div className="sm:w-1/5 w-full flex justify-center">
                                         <p className="text-indigo-300">
                                             {details.clientName}
                                         </p>
                                     </div>
-                                    <div className="sm:w-1/4 w-full flex justify-center">
+                                    <div className="sm:w-1/5 w-full flex justify-center">
                                         <p className="text-2xl font-bold">
                                             £{details.total}
                                         </p>
                                     </div>
-                                    <div className={`sm:w-1/6 w-4/5 ml-auto mr-auto flex flex-row items-center justify-center rounded-md ${details.status === 'Paid' ? "bg-green-50 text-green-300" : null} 
+                                    <div className={`sm:w-36 w-4/5 ml-auto mr-auto flex flex-row items-center justify-center rounded-md ${details.status === 'Paid' ? "bg-green-50 text-green-300" : null} 
                                     ${details.status === 'Pending' ? "bg-orange-50 text-orange-400" : null} ${details.status === 'Draft' ? "bg-gray-50 text-slate-800" : null}`}>
                                         <BsDot className="text-5xl" />
                                         <p>{details.status}</p>
