@@ -17,7 +17,7 @@ function App() {
     useEffect(() => {
         setInvoices(data);
         setStatus(invoices.length);
-    }, [invoices])
+    }, [])
 
     const handleSelect = (e : React.ChangeEvent<HTMLSelectElement>) => {
         setFilter(e.target.value);
@@ -73,7 +73,7 @@ function App() {
                 />
             </div>
         </div>
-        {detailedView ? <InvoiceDetails invoiceInfo={invoiceInfo} setView={setView} /> :
+        {detailedView ? <InvoiceDetails invoiceInfo={invoiceInfo} setView={setView} invoices={invoices} setInvoices={setInvoices} /> :
         <div className="col-span-4 sm:mt-24 mt-16">
             <div className="sm:w-3/4 w-full h-16 flex items-center sm:flex-row flex-col">
                 <div className="w-1/5 text-4xl font-bold">
@@ -102,7 +102,8 @@ function App() {
                 </p>
             </div>
             <div className="sm:w-3/4 w-full mt-16 sm:flex justify-center items-center sm:flex-col sm:space-y-2 space-y-16">
-                {invoices.length === 0 ? <img className="w-72 h-64" src={'assets/illustration-empty.svg'} alt="illustration" /> :
+                {invoices.length === 0 ? <div><img className="w-72 h-64 sm:ml-0 ml-12" src={'assets/illustration-empty.svg'} alt="illustration" />
+                        <h1 className="text-center text-black font-bold text-2xl">There is nothing here</h1></div> :
                     filtered.map((details : any, index : number) => {
                         return (
                             <div className="w-full sm:h-16 h-36" key={index}>
