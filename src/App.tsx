@@ -73,7 +73,7 @@ function App() {
                 />
             </div>
         </div>
-        {detailedView ? <InvoiceDetails invoiceInfo={invoiceInfo} setView={setView} invoices={invoices} setInvoices={setInvoices} /> :
+        {detailedView ? <InvoiceDetails invoiceInfo={invoiceInfo} setView={setView} invoices={invoices} setInvoices={setInvoices} setInfo={setInfo} /> :
         <div className="col-span-4 sm:mt-24 mt-16">
             <div className="sm:w-3/4 w-full h-16 flex items-center sm:flex-row flex-col">
                 <div className="w-1/5 text-4xl font-bold">

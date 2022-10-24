@@ -2,15 +2,20 @@ import React from 'react';
 import {BiChevronLeft} from 'react-icons/bi';
 import {BsDot} from 'react-icons/bs';
 
-function InvoiceDetails({setView, setInvoices, invoiceInfo, invoices} : any) {
+function InvoiceDetails({setView, setInvoices, setInfo, invoiceInfo, invoices} : any) {
 
     const handleBack = () => {
         setView(false);
     }
 
     const handleDelete = () => {
-        setInvoices((prev : any) => invoices.filter((invoice : any ) => invoice.id !== invoiceInfo.id));
+        setInvoices((prev : any) => invoices.filter((invoice : any) => invoice.id !== invoiceInfo.id));
         setView(false);
+    }
+
+    const handleMarkAsPaid = () => {
+       setInvoices(invoices.filter((invoice : any) => invoice.id !== invoiceInfo.id).concat({...invoiceInfo, status : 'Paid'}));
+       setView(false);
     }
 
     return (
@@ -39,7 +44,7 @@ function InvoiceDetails({setView, setInvoices, invoiceInfo, invoices} : any) {
                         Delete
                     </button>
                     {invoiceInfo.status !== 'Paid' ?
-                    <button className="p-3 pr-4 pl-4 text-white rounded-full bg-violet-700">
+                    <button onClick={handleMarkAsPaid} className="p-3 pr-4 pl-4 text-white rounded-full bg-violet-700">
                         Mark as Paid
                     </button>
                     : null}
