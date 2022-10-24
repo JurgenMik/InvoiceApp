@@ -2,9 +2,14 @@ import React from 'react';
 import {BiChevronLeft} from 'react-icons/bi';
 import {BsDot} from 'react-icons/bs';
 
-function InvoiceDetails({setView, invoiceInfo} : any) {
+function InvoiceDetails({setView, setInvoices, invoiceInfo, invoices} : any) {
 
     const handleBack = () => {
+        setView(false);
+    }
+
+    const handleDelete = () => {
+        setInvoices((prev : any) => invoices.filter((invoice : any ) => invoice.id !== invoiceInfo.id));
         setView(false);
     }
 
@@ -30,7 +35,7 @@ function InvoiceDetails({setView, invoiceInfo} : any) {
                     <button className="text-indigo-500">
                         Edit
                     </button>
-                    <button className="p-3 pl-6 pr-6 text-white rounded-full bg-red-500">
+                    <button onClick={handleDelete} className="p-3 pl-6 pr-6 text-white rounded-full bg-red-500">
                         Delete
                     </button>
                     {invoiceInfo.status !== 'Paid' ?
