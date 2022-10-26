@@ -50,7 +50,7 @@ function InvoiceDetails({setView, setInvoices, setInfo, invoiceInfo, invoices} :
                     : null}
                 </div>
             </div>
-            <div className="sm:w-3/4 w-full h-1/2 sm:mt-12 mt-24">
+            <div className="sm:w-3/4 w-full h-1/2 sm:mt-12 mt-24 sm:ml-0 ml-2">
                 <div className="w-full h-1/5 sm:flex">
                     <div className="sm:w-1/3 sm:flex sm:flex-col inline">
                         <p className="text-2xl font-bold"><span className="text-indigo-300">#</span>
@@ -88,7 +88,7 @@ function InvoiceDetails({setView, setInvoices, setInfo, invoiceInfo, invoices} :
                                 Payment Due
                             </h1>
                             <p className="text-xl font-bold">
-                                {invoiceInfo.paymentDue}
+                                {!invoiceInfo.paymentDue ? invoiceInfo.paymentTerms : invoiceInfo.paymentDue}
                             </p>
                         </div>
                     </div>
