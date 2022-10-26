@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {invoiceInterface} from '../Interfaces/InvoiceInterface'
+import {MdDelete} from 'react-icons/md';
 
 function CreateInvoice({invoices, setInvoices, setCreate} : any) {
 
@@ -53,6 +54,14 @@ function CreateInvoice({invoices, setInvoices, setCreate} : any) {
         setItems(newArr);
 
         setInvoice({...newInvoice, items : itemList});
+    }
+
+    const handleDeleteItem = (e : React.MouseEvent<HTMLOrSVGElement>, item : any) => {
+        let updatedItems = itemList.filter((invoiceItem : any) => invoiceItem.name !== item.name);
+
+        setItems((prev : any) => updatedItems);
+
+        setInvoice({...newInvoice, items : updatedItems});
     }
 
     const handleTotalPrice = () => {
@@ -238,7 +247,7 @@ function CreateInvoice({invoices, setInvoices, setCreate} : any) {
                 <h1 className="text-xl text-gray-500">
                     Item List
                 </h1>
-                <div className="w-full flex flex-row text-indigo-300 sm:space-x-24 space-x-12 mt-6">
+                <div className="w-full flex flex-row text-indigo-300 sm:space-x-20 space-x-8 mt-6">
                     <h1>Item Name</h1>
                     <h1>Qty.</h1>
                     <h1>Price</h1>
@@ -246,7 +255,7 @@ function CreateInvoice({invoices, setInvoices, setCreate} : any) {
                 </div>
                 {itemList.map((item : any, index : number) => {
                     return (
-                        <div className="w-full flex flex-row space-x-6" key={index}>
+                        <div className="w-full flex flex-row space-x-3" key={index}>
                             <input
                                 name="name"
                                 type="text"
@@ -271,6 +280,7 @@ function CreateInvoice({invoices, setInvoices, setCreate} : any) {
                                 className="p-2 w-1/2 border border-gray-300 rounded-md mt-2 mb-2"
                                 onChange={e => handleItemChange(e, index)}
                             />
+                            <MdDelete onClick={e => handleDeleteItem(e, item)} className="text-6xl text-gray-500" />
                         </div>
                         )
                 })}
