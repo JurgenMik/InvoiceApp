@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
+import EditInvoice from './EditInvoice';
 import {BiChevronLeft} from 'react-icons/bi';
 import {BsDot} from 'react-icons/bs';
 
 function InvoiceDetails({setView, setInvoices, setInfo, invoiceInfo, invoices} : any) {
+
+    const [editView, setEdit] = useState<boolean>(false)
 
     const handleBack = () => {
         setView(false);
@@ -18,8 +21,13 @@ function InvoiceDetails({setView, setInvoices, setInfo, invoiceInfo, invoices} :
        setView(false);
     }
 
+    const handleEditView = () => {
+        setEdit(true);
+    }
+
     return (
         <div className="col-span-4 sm:mt-16 mt-8">
+            {editView ? <EditInvoice setInfo={setInfo} invoiceInfo={invoiceInfo} setEdit={setEdit} invoices={invoices} setInvoices={setInvoices} /> : null}
             <div className="flex flex-row sm:justify-start justify-center space-x-8">
                 <BiChevronLeft
                     className="text-2xl font-bold text-indigo-500"
@@ -37,7 +45,7 @@ function InvoiceDetails({setView, setInvoices, setInfo, invoiceInfo, invoices} :
                     </div>
                 </div>
                 <div className="sm:w-1/3 w-2/3 sm:space-x-4 space-x-2 inline sm:space-y-0 space-y-4 sm:ml-0 ml-2">
-                    <button className="text-indigo-500">
+                    <button onClick={handleEditView} className="text-indigo-500">
                         Edit
                     </button>
                     <button onClick={handleDelete} className="p-3 pl-6 pr-6 text-white rounded-full bg-red-500">
