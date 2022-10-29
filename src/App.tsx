@@ -4,6 +4,7 @@ import InvoiceDetails from './components/InvoiceDetails';
 import CreateInvoice from './components/CreateInvoice';
 import {RiMoonFill} from 'react-icons/ri';
 import {BsPlus, BsDot} from 'react-icons/bs';
+import {TiArrowUnsorted} from 'react-icons/ti';
 import {BiChevronRight} from 'react-icons/bi';
 import {invoiceInterface} from './Interfaces/InvoiceInterface';
 
@@ -51,6 +52,12 @@ function App() {
 
     let filtered = useMemo(handleFilters, [invoices, filter]);
 
+    const handleSort = () => {
+        const sortInvoices = invoices.sort((a : any, b : any) =>
+            a.clientName > b.clientName ? 1 : -1);
+        setInvoices(invoices.slice(invoices.length).concat(sortInvoices));
+    }
+
     const handleDetailedView = (details : any) => {
         setInfo(details);
         setView(true);
@@ -88,8 +95,12 @@ function App() {
         {detailedView ? <InvoiceDetails invoiceInfo={invoiceInfo} setView={setView} invoices={invoices} setInvoices={setInvoices} setInfo={setInfo} /> :
         <div className="col-span-4 sm:mt-24 mt-16 relative">
             <div className="sm:w-3/4 w-full h-16 flex items-center sm:flex-row flex-col">
-                <div className="w-1/5 text-4xl font-bold">
+                <div className="w-1/5 text-4xl font-bold flex flex-row items-center space-x-4">
                     <h1>Invoices</h1>
+                    <TiArrowUnsorted
+                        className="text-2xl"
+                        onClick={handleSort}
+                    />
                 </div>
                 <div className="w-4/5 flex sm:ml-auto sm:space-x-16 space-x-4 sm:mt-0 mt-4">
                     <select
