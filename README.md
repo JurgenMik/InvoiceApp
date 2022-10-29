@@ -17,7 +17,7 @@ Invoice App [Frontend Mentor Challenge](https://www.frontendmentor.io/challenges
 * <strong>Delete</strong> a invoice
 * <strong>View</strong> the optimal layout for the app on mobile devices
 ### Screenshots
-![image](https://user-images.githubusercontent.com/89903354/198298318-bfea01b6-9b14-4042-93c8-f3a9efb28802.png)
+![image](https://user-images.githubusercontent.com/89903354/198824936-c85e99a0-7204-4a23-ac27-275f0bdf0110.png)
 ![image](https://user-images.githubusercontent.com/89903354/198298465-86f5e946-6e30-43f9-b4f2-d7c82a095085.png)
 ![image](https://user-images.githubusercontent.com/89903354/198298614-dcc5e0a9-bd27-4dbd-bf9c-3bdc5a3ee693.png)
 ![image](https://user-images.githubusercontent.com/89903354/198299622-9c82c6e1-3b31-4723-b781-c5cd23410e98.png)
